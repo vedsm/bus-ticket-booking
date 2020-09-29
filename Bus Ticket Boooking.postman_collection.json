@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "3d3c2b5e-102b-4494-affc-89b02822a79b",
+		"name": "Bus Boooking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Root Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BUS_BOOKING_BASE_URL}}/",
+					"host": [
+						"{{BUS_BOOKING_BASE_URL}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Ticket Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BUS_BOOKING_BASE_URL}}/ticket/1/status",
+					"host": [
+						"{{BUS_BOOKING_BASE_URL}}"
+					],
+					"path": [
+						"ticket",
+						"1",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Details of person owning the ticket",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BUS_BOOKING_BASE_URL}}/ticket/1",
+					"host": [
+						"{{BUS_BOOKING_BASE_URL}}"
+					],
+					"path": [
+						"ticket",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the ticket status (open/close + adding user details)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booked\": true,\n    \"customer_name\": \"Ved M\",\n    \"customer_age\": 42,\n    \"customer_gender\": \"Male\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BUS_BOOKING_BASE_URL}}/ticket/1",
+					"host": [
+						"{{BUS_BOOKING_BASE_URL}}"
+					],
+					"path": [
+						"ticket",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View all closed tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BUS_BOOKING_BASE_URL}}/closed-tickets",
+					"host": [
+						"{{BUS_BOOKING_BASE_URL}}"
+					],
+					"path": [
+						"closed-tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View all open tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BUS_BOOKING_BASE_URL}}/open-tickets",
+					"host": [
+						"{{BUS_BOOKING_BASE_URL}}"
+					],
+					"path": [
+						"open-tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset the server (opens up all the tickets)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BUS_BOOKING_BASE_URL}}/admin/reset-server",
+					"host": [
+						"{{BUS_BOOKING_BASE_URL}}"
+					],
+					"path": [
+						"admin",
+						"reset-server"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

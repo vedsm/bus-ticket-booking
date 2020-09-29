@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mongo:
+    image: bitnami/mongodb:4.0.2-debian-9
+    restart: always
+    environment:
+      MONGODB_ROOT_PASSWORD: example_pwd
+    ports:
+      - 27017:27017
+    # volumes:
+    #   - /mounted-drive/mongo-data:/bitnami
+
+networks:
+  default:
+    external:
+      name: dev_network

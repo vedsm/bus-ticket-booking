@@ -1,0 +1,3 @@
+{
+	"DBHost": "mongodb://root:example_pwd@localhost:27017/bus_info?authSource=admin"
+}

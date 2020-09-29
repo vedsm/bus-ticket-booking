@@ -1,0 +1,16 @@
+version: '3'
+services:
+  bus-booking:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: veddev/bus_booking:latest
+    environment:
+      - NODE_ENV=docker
+    ports:
+      - 8080:8080
+
+networks:
+  default:
+    external:
+      name: dev_network
