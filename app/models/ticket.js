@@ -4,7 +4,6 @@ let Schema = mongoose.Schema;
 //ticket schema definition
 let TicketSchema = new Schema(
   {
-    bus: { type: String, required: true },
     seat: { type: Number, required: true },
     booked: { type: Boolean, required: true },
     customer_name: { type: String },

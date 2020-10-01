@@ -1,4 +1,5 @@
 let Ticket = require('../models/ticket');
+const ACCEPTED_GENDERS = ["MALE", "FEMALE", "OTHER"]
 
 /*
  * GET /ticket/:seat/status route to View Ticket Status.
@@ -7,7 +8,7 @@ function getTicketStatus(req, res) {
 	//Query the DB and if no errors, send the ticket
 	Ticket.findOne({seat: req.params.seat}, (err, ticket) => {
 		if(err) res.send(err);
-		else if(!ticket) res.json({message: "No seat found for this seat number"})
+		else if(!ticket) res.status(404).send({message: "No seat found for this seat number."})
 		else {
 			if(ticket.booked) res.json({message: "The ticket is booked", booked: ticket.booked});
 			else res.json({message: "The ticket is not yet booked", booked: ticket.booked});
@@ -22,7 +23,7 @@ function getTicket(req, res) {
 	//Query the DB and if no errors, send the ticket
 	Ticket.findOne({seat: req.params.seat}, (err, ticket) => {
 		if(err) res.send(err);
-		else if(!ticket) res.json({message: "No seat found for this seat number"})
+		else if(!ticket) res.status(404).send({message: "No seat found for this seat number."})
 		else {
 			res.json(ticket)
 		}
@@ -33,12 +34,27 @@ function getTicket(req, res) {
  * PUT /ticket/:seat route to Update the ticket status (open/close + adding user details).
  */
 function updateTicket(req, res) {
+	newTicket = req.body
+	// console.log("newTicket", newTicket)
+	if (!Object.keys(newTicket).length) {
+		return res.status(422).send({message: "Please send proper body"})
+	}
+	//Check if gender is proper
+	if (newTicket.customer_gender && ACCEPTED_GENDERS.indexOf(newTicket.customer_gender) == -1) {
+		return res.status(422).send({message: "Please send proper gender", ACCEPTED_GENDERS})
+	}
 	//Query the DB and if no errors, update the ticket
 	Ticket.findOne({seat: req.params.seat}, (err, ticket) => {
 		if(err) res.send(err);
-		else if(!ticket) res.json({message: "No seat found for this seat number"})
+		else if(!ticket) res.status(404).send({message: "No seat found for this seat number."})
+		else if(ticket.booked && newTicket.booked) res.status(420).send({message: "Ticket is already booked"})
 		else {
-			Object.assign(ticket, req.body).save((err, ticket) => {
+			if(ticket.booked && !newTicket.booked){
+				newTicket.customer_name = null
+				newTicket.customer_age = null
+				newTicket.customer_gender = null
+			}
+			Object.assign(ticket, newTicket).save((err, ticket) => {
 				if(err) res.send(err);
 				else res.json({ message: 'ticket updated!', ticket });
 			});	
